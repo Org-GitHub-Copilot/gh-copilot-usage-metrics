@@ -1,0 +1,30 @@
+export ORG="Org-GitHub-Copilot"
+export TOKEN=$(./generate_token.sh key.pem Iv23lip1abgCH82FG6QQ 600|tail -1)
+curl -L \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/orgs/${ORG}/copilot/usage
+
+
+
+
+
+export ORG="Org-GitHub-Copilot"
+export CLIENT_ID="Iv23lip1abgCH82FG6QQ"
+export INSTALLATION_ID="54538407"
+export JWT=$(./generate_jwt.sh key.pem $CLIENT_ID 600|tail -1)
+export TOKEN=$(curl -s -X POST -H "Authorization: Bearer $JWT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens|jq '.token'|tr -d \")
+
+curl \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/orgs/${ORG}/copilot/usage
+
+
+
+
+
+
+ewogICJhbGciOiAiUlMyNTYiLAogICJ0eXAiOiAiSldUIgp9.ewogICJpYXQiOiAxNzI1NjIxMjE2LAogICJleHAiOiAxNzI1NjIxODE2LAogICJpc3MiOiAiSXYyM2xpcDFhYmdDSDgyRkc2UVEiCn0.tudqx-5Wo4NIWyFyeB39CoKbGreY0-M8RwQ0LRDfmdKQaA8NKtrTV_s7MiNdYkbRRqtrVtmmTIxTwpA8LnQxYnljqGqcK8fNPB3wePYW17B_bGqmzAH5JBNZuogYiw-hKGQScHRu09sKF47ya0gYWuoW7rwAFhG-yju1tLcP6_b9_hdLr7dHEA-FtOtl6gCWP-GxlzGmgDlrvFfmtK6tX9xnDdqRTjakkb-ph_y6jhhNaJEFVU1HTxBkVJUocpHeUKONt6ijlZ0rpSCspW4XbYYhGnJFaSRxMbS4mgps5i5PBPFaWuXsfua0AzzfA--nqsx1dnTc4EpDfhheQLsIQA
